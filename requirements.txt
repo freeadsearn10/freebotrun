@@ -1,0 +1,8 @@
+telethon
+pytz
+Pillow
+requests
+psutil
+qrcode[pil]
+googletrans==4.0.0-rc1
+clarifai-grpc
