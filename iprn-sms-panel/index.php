@@ -13,99 +13,238 @@ $totalRevenue = (float) $pdo->query('SELECT COALESCE(SUM(cost), 0) FROM sms_logs
 
 render_header('IPRN SMS Panel - Home');
 ?>
-<section class="py-5">
+<section class="hero-section py-5">
     <div class="row align-items-center">
-        <div class="col-md-6">
-            <h1 class="display-5 fw-bold mb-3">IPRN SMS Panel v6.0</h1>
-            <p class="lead">Carrier-grade International Premium Rate Number (IPRN) SMS routing panel for shared hosting. Upload TXT lists, define ranges and rates, and manage payouts — all from a responsive Bootstrap 5 interface.</p>
-            <ul class="list-unstyled mb-4">
-                <li>✔ TXT upload (numbers only)</li>
-                <li>✔ Range-based rating and payout percentages</li>
-                <li>✔ Static user dashboard with live stats</li>
-                <li>✔ Admin mobile/desktop control panel</li>
-                <li>✔ Ready for cPanel + CRON jobs</li>
-            </ul>
-            <a href="register.php" class="btn btn-primary btn-lg me-2">Get Started</a>
-            <a href="login.php" class="btn btn-outline-light btn-lg">Admin Login</a>
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <span class="badge bg-gradient-primary-soft text-uppercase mb-3 small fw-semibold">
+                IPRN SMS PLATFORM
+            </span>
+            <h1 class="display-5 fw-bold mb-3 text-white">
+                High‑Volume IPRN SMS
+                <span class="text-gradient-primary">Routing Panel</span>
+            </h1>
+            <p class="lead text-light-50 mb-4">
+                Upload numbers as TXT, create ranges and payout rules, and monitor live SMS performance –
+                optimised for shared hosting, cPanel and resellers.
+            </p>
+            <div class="d-flex flex-wrap gap-2 mb-4">
+                <a href="register.php" class="btn btn-primary btn-lg px-4">Create Account</a>
+                <a href="login.php" class="btn btn-outline-light btn-lg px-4">Admin Login</a>
+            </div>
+            <div class="d-flex flex-wrap gap-3 hero-meta">
+                <div>
+                    <div class="h5 mb-0 text-white"><?php echo number_format($totalSms); ?></div>
+                    <div class="small text-light-50">Total SMS Tracked</div>
+                </div>
+                <div>
+                    <div class="h5 mb-0 text-white"><?php echo $totalRanges; ?></div>
+                    <div class="small text-light-50">Active Ranges</div>
+                </div>
+                <div>
+                    <div class="h5 mb-0 text-white">$<?php echo number_format($totalRevenue, 2); ?></div>
+                    <div class="small text-light-50">Platform Revenue</div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-6 mt-4 mt-md-0">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    Live Platform Stats
+        <div class="col-lg-6">
+            <div class="card glass-card shadow-lg mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Live Routing Snapshot</span>
+                    <span class="badge bg-success-subtle text-success">Operational</span>
                 </div>
                 <div class="card-body">
-                    <div class="row text-center">
+                    <div class="row text-center mb-3">
                         <div class="col-6 mb-3">
-                            <h4><?php echo $totalRanges; ?></h4>
-                            <div class="text-muted">Ranges</div>
+                            <div class="small text-muted">Ranges</div>
+                            <div class="h4 mb-0"><?php echo $totalRanges; ?></div>
                         </div>
                         <div class="col-6 mb-3">
-                            <h4><?php echo number_format($totalNumbers); ?></h4>
-                            <div class="text-muted">Numbers Loaded</div>
+                            <div class="small text-muted">Numbers Loaded</div>
+                            <div class="h4 mb-0"><?php echo number_format($totalNumbers); ?></div>
                         </div>
                         <div class="col-6">
-                            <h4><?php echo number_format($totalSms); ?></h4>
-                            <div class="text-muted">Total SMS</div>
+                            <div class="small text-muted">Total SMS</div>
+                            <div class="h4 mb-0"><?php echo number_format($totalSms); ?></div>
                         </div>
                         <div class="col-6">
-                            <h4>$<?php echo number_format($totalRevenue, 2); ?></h4>
-                            <div class="text-muted">Total Revenue</div>
+                            <div class="small text-muted">Revenue (USD)</div>
+                            <div class="h4 mb-0">$<?php echo number_format($totalRevenue, 2); ?></div>
                         </div>
                     </div>
                     <hr>
-                    <p class="mb-0 small text-muted">
-                        Minimum payout: ৳<?php echo number_format((float) $settings['min_payout'], 2); ?> ·
-                        Signup: <?php echo $settings['signup_enabled'] ? 'OPEN' : 'CLOSED'; ?>
-                    </p>
+                    <div class="d-flex justify-content-between small text-muted">
+                        <span>Minimum payout</span>
+                        <span>৳<?php echo number_format((float) $settings['min_payout'], 2); ?></span>
+                    </div>
+                    <div class="d-flex justify-content-between small text-muted mt-1">
+                        <span>Public signup</span>
+                        <span class="badge bg-<?php echo $settings['signup_enabled'] ? 'success' : 'secondary'; ?>">
+                            <?php echo $settings['signup_enabled'] ? 'OPEN' : 'CLOSED'; ?>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-2 text-center small text-light-50">
+                <div class="col-4">
+                    <span class="d-block fw-semibold text-white">TXT Upload</span>
+                    Numbers only, one per line
+                </div>
+                <div class="col-4">
+                    <span class="d-block fw-semibold text-white">IPRN Focused</span>
+                    Ranges, rates, payout %
+                </div>
+                <div class="col-4">
+                    <span class="d-block fw-semibold text-white">cPanel Ready</span>
+                    Shared hosting friendly
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-4">
-    <h2 class="h4 mb-3">Features</h2>
+<section class="py-5 bg-dark-900">
+    <h2 class="h4 mb-3 text-white text-center">Built for IPRN Operators &amp; Resellers</h2>
+    <p class="text-center text-light-50 mb-4">
+        Everything you need to manage premium routes, SMS capacity and payout logic – without touching raw code.
+    </p>
     <div class="row g-3">
         <div class="col-md-4">
-            <div class="card h-100 shadow-sm">
+            <div class="card feature-card h-100 shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title">TXT Number Upload</h5>
-                    <p class="card-text">Upload simple <code>.txt</code> files with one number per line. The panel validates that each line contains numbers only and automatically builds your stock.</p>
+                    <p class="card-text">
+                        Drop in a <code>.txt</code> file with one number per line. We validate digits-only input and build
+                        your available stock automatically.
+                    </p>
+                    <ul class="small text-muted mb-0">
+                        <li>Numbers-only validation (88016…, 55555…)</li>
+                        <li>Per-range stock counters</li>
+                        <li>Upload history kept in <code>/upload</code></li>
+                    </ul>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card h-100 shadow-sm">
+            <div class="card feature-card h-100 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Range &amp; Rate Control</h5>
-                    <p class="card-text">Attach uploaded numbers to named ranges (e.g. <strong>Afghanistan RTX 761</strong>) with custom per-SMS rates and payout percentages.</p>
+                    <h5 class="card-title">Range &amp; Rating Engine</h5>
+                    <p class="card-text">
+                        Attach uploaded numbers to named ranges like
+                        <strong>Afghanistan RTX 761</strong> with custom USD rate and payout percentage.
+                    </p>
+                    <ul class="small text-muted mb-0">
+                        <li>Per-country / per-operator ranges</li>
+                        <li>Custom payout % and live stock</li>
+                        <li>Active / inactive status handling</li>
+                    </ul>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card h-100 shadow-sm">
+            <div class="card feature-card h-100 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Payout Management</h5>
-                    <p class="card-text">Configure minimum payout thresholds, track pending payouts, and manage manual approvals from a secure admin billing panel.</p>
+                    <h5 class="card-title">Payout &amp; Billing</h5>
+                    <p class="card-text">
+                        Enforce minimum payout, review pending withdrawals and track manual payments (bKash, Nagad,
+                        PayPal, Stripe or bank).
+                    </p>
+                    <ul class="small text-muted mb-0">
+                        <li>Minimum payout control</li>
+                        <li>Pending / approved / paid states</li>
+                        <li>CRON-based auto payout creation</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-4">
-    <h2 class="h4 mb-3">Compliance</h2>
-    <p class="small text-muted">
-        This demo panel is designed for environments regulated by authorities such as BTRC, TCPA, and GDPR. You are responsible for configuring your own routing, SMPP/HTTP gateways, and ensuring that all traffic
-        complies with your local regulations, opt-in requirements, and data protection laws.
-    </p>
+<section class="py-5 bg-dark-950">
+    <div class="row g-4 align-items-center">
+        <div class="col-lg-6">
+            <h2 class="h4 text-white mb-3">Realtime Analytics &amp; Country Mix</h2>
+            <p class="text-light-50 mb-3">
+                Track daily SMS volume, revenue distribution by country and top-performing ranges with responsive
+                charts optimised for mobile admin.
+            </p>
+            <ul class="text-light-50 small mb-0">
+                <li>Line chart: daily SMS volume (last 7 days)</li>
+                <li>Pie chart: revenue split by country</li>
+                <li>Bar chart: top ranges by SMS</li>
+                <li>Auto-refresh admin KPIs every 30 seconds</li>
+            </ul>
+        </div>
+        <div class="col-lg-6">
+            <div class="card glass-card shadow-lg">
+                <div class="card-header">Example User Snapshot</div>
+                <div class="card-body small">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Balance</span>
+                        <strong>৳18,450</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Today</span>
+                        <span>3,245 SMS · $245.60</span>
+                    </div>
+                    <hr>
+                    <div class="mb-2 fw-semibold">Recent Ranges</div>
+                    <ul class="list-unstyled mb-0 small">
+                        <li>Afghanistan RTX 761 – $0.12 · 2,450 numbers</li>
+                        <li>Bangladesh GP 1645 – $0.08 · 5,000 numbers</li>
+                        <li>USA AT&amp;T 555 – $0.15 · 150 numbers</li>
+                    </ul>
+                    <div class="mt-3 small text-success">
+                        Minimum ৳5,000 | Balance ৳18,450 – ELIGIBLE for payout
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
-<section class="py-4">
-    <h2 class="h4 mb-3">API Integration</h2>
-    <p class="small text-muted">
-        The panel is built to sit in front of your own SMS delivery infrastructure. You can attach HTTP or SMPP gateways to your ranges and use the balance and statistics as a control layer for resellers.
-    </p>
+<section class="py-5 bg-dark-900">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <h3 class="h5 text-white mb-3">Compliance Ready</h3>
+            <p class="text-light-50 small mb-3">
+                Built with BTRC, TCPA and GDPR guidelines in mind – you control routing, consent and retention policies.
+            </p>
+            <a href="compliance.php" class="link-light small text-decoration-none">
+                View compliance notes →
+            </a>
+        </div>
+        <div class="col-md-4">
+            <h3 class="h5 text-white mb-3">API &amp; Integration</h3>
+            <p class="text-light-50 small mb-3">
+                Use your existing SMPP or HTTP gateways. The panel focuses on rating, balances and reporting – not raw
+                SMS delivery.
+            </p>
+            <a href="api-docs.php" class="link-light small text-decoration-none">
+                View API examples →
+            </a>
+        </div>
+        <div class="col-md-4">
+            <h3 class="h5 text-white mb-3">Pricing &amp; Live Stats</h3>
+            <p class="text-light-50 small mb-3">
+                Expose public pricing cards and live counters directly from real database values to build trust.
+            </p>
+            <div class="d-flex flex-column gap-1 small">
+                <a href="pricing.php" class="link-light text-decoration-none">View pricing ranges →</a>
+                <a href="live-stats.php" class="link-light text-decoration-none">View live platform stats →</a>
+            </div>
+        </div>
+    </div>
 </section>
+
+<footer class="py-4 bg-dark-975 border-top border-dark">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small text-light-50">
+        <div>© <?php echo date('Y'); ?> IPRN SMS Panel. All rights reserved.</div>
+        <div class="mt-2 mt-md-0">
+            <a href="contact.php" class="link-light text-decoration-none me-3">Contact</a>
+            <a href="compliance.php" class="link-light text-decoration-none me-3">Compliance</a>
+            <a href="api-docs.php" class="link-light text-decoration-none">API</a>
+        </div>
+    </div>
+</footer>
 <?php
 render_footer();
