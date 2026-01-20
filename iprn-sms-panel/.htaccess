@@ -1,0 +1,10 @@
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+</IfModule>
+
+# Protect common sensitive files
+<FilesMatch "\.(sql|ini|log|bak)$">
+    Require all denied
+</FilesMatch>
