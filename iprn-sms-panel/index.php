@@ -87,16 +87,16 @@ render_header($brandName . ' - Home', false, 'landing-page', $settings['meta_des
             </div>
             <div class="row g-2 text-center small text-light-50">
                 <div class="col-4">
-                    <span class="d-block fw-semibold text-white">TXT Upload</span>
-                    Numbers only, one per line
+                    <span class="d-block fw-semibold text-white">Premium Routes</span>
+                    High value IPRN SMS
                 </div>
                 <div class="col-4">
-                    <span class="d-block fw-semibold text-white">IPRN Focused</span>
-                    Ranges, rates, payout %
+                    <span class="d-block fw-semibold text-white">Live Analytics</span>
+                    Volume &amp; revenue
                 </div>
                 <div class="col-4">
-                    <span class="d-block fw-semibold text-white">cPanel Ready</span>
-                    Shared hosting friendly
+                    <span class="d-block fw-semibold text-white">Fast Payouts</span>
+                    bKash, Nagad, bank
                 </div>
             </div>
         </div>
@@ -104,56 +104,38 @@ render_header($brandName . ' - Home', false, 'landing-page', $settings['meta_des
 </section>
 
 <section class="py-5 bg-dark-900">
-    <h2 class="h4 mb-3 text-white text-center animate-fade-up">Built for IPRN Operators &amp; Resellers</h2>
+    <h2 class="h4 mb-3 text-white text-center animate-fade-up">Why operators choose <?php echo e($brandName); ?></h2>
     <p class="text-center text-light-50 mb-4 animate-fade-up">
-        Everything you need to manage premium routes, SMS capacity and payout logic – without touching raw code.
+        Simple web panel for premium rate SMS – connect ranges, track performance and manage payouts in minutes.
     </p>
     <div class="row g-3">
         <div class="col-md-4 animate-fade-up">
             <div class="card feature-card h-100 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">TXT Number Upload</h5>
+                    <h5 class="card-title">Easy number loading</h5>
                     <p class="card-text">
-                        Drop in a <code>.txt</code> file with one number per line. We validate digits-only input and build
-                        your available stock automatically.
+                        Upload your active numbers and keep everything organised by country and operator.
                     </p>
-                    <ul class="small text-muted mb-0">
-                        <li>Numbers-only validation (88016…, 55555…)</li>
-                        <li>Per-range stock counters</li>
-                        <li>Upload history kept in <code>/upload</code></li>
-                    </ul>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card feature-card h-100 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Range &amp; Rating Engine</h5>
+                    <h5 class="card-title">Range &amp; rate control</h5>
                     <p class="card-text">
-                        Attach uploaded numbers to named ranges like
-                        <strong>Afghanistan RTX 761</strong> with custom USD rate and payout percentage.
+                        Set custom rates and payout percentages per range to match your commercial deals.
                     </p>
-                    <ul class="small text-muted mb-0">
-                        <li>Per-country / per-operator ranges</li>
-                        <li>Custom payout % and live stock</li>
-                        <li>Active / inactive status handling</li>
-                    </ul>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card feature-card h-100 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Payout &amp; Billing</h5>
+                    <h5 class="card-title">Payout workflow</h5>
                     <p class="card-text">
-                        Enforce minimum payout, review pending withdrawals and track manual payments (bKash, Nagad,
-                        PayPal, Stripe or bank).
+                        Track user balances, create payout requests and mark them as pending, approved or paid.
                     </p>
-                    <ul class="small text-muted mb-0">
-                        <li>Minimum payout control</li>
-                        <li>Pending / approved / paid states</li>
-                        <li>CRON-based auto payout creation</li>
-                    </ul>
                 </div>
             </div>
         </div>

@@ -25,12 +25,13 @@ function init_session(): void
 
 function redirect(string $path): void
 {
+    // Use relative redirects by default so the panel works even if BASE_URL is misconfigured.
+    // If an absolute URL is passed (starts with http), use it as-is.
     if (strpos($path, 'http') !== 0) {
-        $base = defined('BASE_URL') ? BASE_URL : '';
-        $path = rtrim($base, '/') . '/' . ltrim($path, '/');
+        header('Location: ' . $path);
+    } else {
+        header('Location: ' . $path);
     }
-
-    header('Location: ' . $path);
     exit;
 }
 
@@ -208,6 +209,9 @@ function render_header(
     $base = defined('BASE_URL') ? rtrim(BASE_URL, '/') : '';
     $bodyClass = trim(($is_admin ? 'admin-body' : 'public-body') . ' ' . $extra_body_class);
 
+    // Asset prefix for CSS/JS so paths work both from public pages and /admin pages.
+    $assetPrefix = $is_admin ? '../' : '';
+
     $settings = null;
     if (function_exists('get_settings')) {
         try {
@@ -253,13 +257,13 @@ function render_header(
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/admin.css">
+        <link rel="stylesheet" href="<?php echo $assetPrefix; ?>assets/css/admin.css">
     </head>
     <body class="<?php echo $bodyClass; ?>">
     <?php if ($is_admin): ?>
         <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="<?php echo $base; ?>/admin/index.php"><?php echo e($brandName); ?> Admin</a>
+                <a class="navbar-brand" href="index.php"><?php echo e($brandName); ?> Admin</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#adminNavbar" aria-controls="adminNavbar" aria-expanded="false"
                         aria-label="Toggle navigation">
@@ -267,11 +271,11 @@ function render_header(
                 </button>
                 <div class="collapse navbar-collapse" id="adminNavbar">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/admin/index.php">Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/admin/users.php">Users</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/admin/numbers.php">Numbers</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/admin/settings.php">Settings</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/admin/billing.php">Billing</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.php">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="users.php">Users</a></li>
+                        <li class="nav-item"><a class="nav-link" href="numbers.php">Numbers</a></li>
+                        <li class="nav-item"><a class="nav-link" href="settings.php">Settings</a></li>
+                        <li class="nav-item"><a class="nav-link" href="billing.php">Billing</a></li>
                     </ul>
                     <span class="navbar-text me-3">
                         <?php $user = current_user(); ?>
@@ -279,7 +283,7 @@ function render_header(
                             <?php echo e($user['email']); ?>
                         <?php endif; ?>
                     </span>
-                    <a href="<?php echo $base; ?>/logout.php" class="btn btn-outline-light btn-sm">Logout</a>
+                    <a href="../logout.php" class="btn btn-outline-light btn-sm">Logout</a>
                 </div>
             </div>
         </nav>
@@ -287,11 +291,11 @@ function render_header(
             <div class="row">
                 <div class="col-md-2 col-lg-2 d-none d-md-block bg-light sidebar">
                     <div class="list-group list-group-flush pt-3">
-                        <a href="<?php echo $base; ?>/admin/index.php" class="list-group-item list-group-item-action">Dashboard</a>
-                        <a href="<?php echo $base; ?>/admin/users.php" class="list-group-item list-group-item-action">Users</a>
-                        <a href="<?php echo $base; ?>/admin/numbers.php" class="list-group-item list-group-item-action">Numbers</a>
-                        <a href="<?php echo $base; ?>/admin/settings.php" class="list-group-item list-group-item-action">Settings</a>
-                        <a href="<?php echo $base; ?>/admin/billing.php" class="list-group-item list-group-item-action">Billing</a>
+                        <a href="index.php" class="list-group-item list-group-item-action">Dashboard</a>
+                        <a href="users.php" class="list-group-item list-group-item-action">Users</a>
+                        <a href="numbers.php" class="list-group-item list-group-item-action">Numbers</a>
+                        <a href="settings.php" class="list-group-item list-group-item-action">Settings</a>
+                        <a href="billing.php" class="list-group-item list-group-item-action">Billing</a>
                     </div>
                 </div>
                 <main class="col-12 col-md-10 ms-sm-auto px-3 pt-4">
@@ -299,7 +303,7 @@ function render_header(
     <?php else: ?>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="<?php echo $base; ?>/index.php"><?php echo e($brandName); ?></a>
+                <a class="navbar-brand" href="index.php"><?php echo e($brandName); ?></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#publicNavbar" aria-controls="publicNavbar"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -307,21 +311,21 @@ function render_header(
                 </button>
                 <div class="collapse navbar-collapse" id="publicNavbar">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/index.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/pricing.php">Pricing</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/live-stats.php">Live Stats</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/api-docs.php">API</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/compliance.php">Compliance</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/contact.php">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="pricing.php">Pricing</a></li>
+                        <li class="nav-item"><a class="nav-link" href="live-stats.php">Live Stats</a></li>
+                        <li class="nav-item"><a class="nav-link" href="api-docs.php">API</a></li>
+                        <li class="nav-item"><a class="nav-link" href="compliance.php">Compliance</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
                     </ul>
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <?php if (!is_logged_in()): ?>
-                            <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/login.php">Login</a></li>
-                            <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/register.php">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
+                            <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
                         <?php else: ?>
-                            <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/dashboard.php">Dashboard</a></li>
-                            <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/payouts.php">Payouts</a></li>
-                            <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/logout.php">Logout</a></li>
+                            <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard</a></li>
+                            <li class="nav-item"><a class="nav-link" href="payouts.php">Payouts</a></li>
+                            <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
                         <?php endif; ?>
                     </ul>
                 </div>
@@ -334,7 +338,6 @@ function render_header(
 
 function render_footer(): void
 {
-    $base = defined('BASE_URL') ? rtrim(BASE_URL, '/') : '';
     ?>
         </main>
         <?php if (strpos($_SERVER['PHP_SELF'], '/admin/') !== false): ?>
@@ -348,7 +351,7 @@ function render_footer(): void
                 integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
                 crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-        <script src="<?php echo $base; ?>/assets/js/admin.js"></script>
+        <script src="<?php echo (strpos($_SERVER['PHP_SELF'], '/admin/') !== false) ? '../assets/js/admin.js' : 'assets/js/admin.js'; ?>"></script>
     </body>
     </html>
     <?php
