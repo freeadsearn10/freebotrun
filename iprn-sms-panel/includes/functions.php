@@ -206,7 +206,6 @@ function render_header(
     string $extra_body_class = '',
     ?string $meta_description = null
 ): void {
-    $base = defined('BASE_URL') ? rtrim(BASE_URL, '/') : '';
     $bodyClass = trim(($is_admin ? 'admin-body' : 'public-body') . ' ' . $extra_body_class);
 
     // Asset prefix for CSS/JS so paths work both from public pages and /admin pages.
@@ -230,7 +229,11 @@ function render_header(
 
     $pageTitle = $title !== '' ? $title : ($settingsMetaTitle ?: $brandName);
 
-    $url = $base . ($_SERVER['REQUEST_URI'] ?? '');
+    // Auto-detect full URL for canonical and social tags.
+    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
+    $url = $scheme . '://' . $host . $requestUri;
     ?>
     <!DOCTYPE html>
     <html lang="en">
