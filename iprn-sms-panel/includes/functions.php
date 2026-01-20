@@ -247,12 +247,21 @@ function render_header(string $title = 'IPRN SMS Panel', bool $is_admin = false)
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="publicNavbar">
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/pricing.php">Pricing</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/live-stats.php">Live Stats</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/api-docs.php">API</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/compliance.php">Compliance</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/contact.php">Contact</a></li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <?php if (!is_logged_in()): ?>
                             <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/login.php">Login</a></li>
                             <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/register.php">Register</a></li>
                         <?php else: ?>
                             <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/dashboard.php">Dashboard</a></li>
+                            <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/payouts.php">Payouts</a></li>
                             <li class="nav-item"><a class="nav-link" href="<?php echo $base; ?>/logout.php">Logout</a></li>
                         <?php endif; ?>
                     </ul>
