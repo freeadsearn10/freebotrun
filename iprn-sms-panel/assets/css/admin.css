@@ -38,22 +38,10 @@ body {
     z-index: 1;
 }
 
-/* Simple fade-up animation (works even if JS is disabled) */
-@keyframes fadeUpIn {
-    from {
-        opacity: 0;
-        transform: translateY(24px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
+/* Helper class – currently no animation to avoid any visibility issues */
 .animate-fade-up {
-    opacity: 0;
-    transform: translateY(24px);
-    animation: fadeUpIn 0.7s ease-out forwards;
+    opacity: 1;
+    transform: none;
 }
 
 /* Soft gradients / glass cards */
