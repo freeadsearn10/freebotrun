@@ -11,7 +11,7 @@ $totalUsers = (int) $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'user'"
 $totalSms = (int) $pdo->query('SELECT COALESCE(SUM(sms_count), 0) FROM sms_logs')->fetchColumn();
 $totalRevenue = (float) $pdo->query('SELECT COALESCE(SUM(cost), 0) FROM sms_logs')->fetchColumn();
 
-render_header('IPRN SMS Panel - Home');
+render_header('IPRN SMS Panel - Home', false, 'landing-page');
 ?>
 <section class="hero-section py-5">
     <div class="row align-items-center">

@@ -11,6 +11,13 @@ body {
     min-height: 100vh;
 }
 
+/* Landing page full-height hero */
+.landing-page .hero-section {
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+}
+
 /* Hero section styling similar to modern SaaS SMS sites */
 .hero-section {
     position: relative;
@@ -86,6 +93,64 @@ body {
 
 .hero-meta > div {
     min-width: 120px;
+}
+
+/* Auth pages: light background with centered card */
+.auth-page.public-body {
+    background: #eef4ff;
+}
+
+.auth-wrapper {
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 720px;
+    background: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 18px 60px rgba(15, 23, 42, 0.18);
+    overflow: hidden;
+    border: 1px solid rgba(209, 213, 219, 0.8);
+}
+
+.auth-card-header {
+    padding: 2rem 2rem 1.5rem;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb, #0ea5e9);
+    color: #f9fafb;
+}
+
+.auth-card-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.auth-card-header .small {
+    color: #e0f2fe;
+}
+
+.auth-card-header a {
+    color: #e0f2fe;
+    text-decoration: underline;
+}
+
+.auth-card-body {
+    padding: 2rem;
+    background: #ffffff;
+    color: #111827;
+}
+
+.auth-form-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.auth-muted {
+    color: #6b7280;
 }
 
 /* Admin area */

@@ -182,9 +182,10 @@ function render_flash_messages(): void
     }
 }
 
-function render_header(string $title = 'IPRN SMS Panel', bool $is_admin = false): void
+function render_header(string $title = 'IPRN SMS Panel', bool $is_admin = false, string $extra_body_class = ''): void
 {
     $base = defined('BASE_URL') ? rtrim(BASE_URL, '/') : '';
+    $bodyClass = trim(($is_admin ? 'admin-body' : 'public-body') . ' ' . $extra_body_class);
     ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -196,7 +197,7 @@ function render_header(string $title = 'IPRN SMS Panel', bool $is_admin = false)
               integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/admin.css">
     </head>
-    <body class="<?php echo $is_admin ? 'admin-body' : 'public-body'; ?>">
+    <body class="<?php echo $bodyClass; ?>">
     <?php if ($is_admin): ?>
         <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
             <div class="container-fluid">
