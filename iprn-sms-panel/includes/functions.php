@@ -150,13 +150,30 @@ function get_settings(): array
 
     global $pdo;
 
-    $stmt = $pdo->query('SELECT * FROM settings WHERE id = 1');
-    $settings = $stmt->fetch() ?: [
+    $defaults = [
+        'brand_name' => 'IPRN SMS Panel',
+        'meta_title' => 'IPRN SMS Panel - Premium rate SMS panel',
+        'meta_description' => 'IPRN SMS Panel for premium rate SMS traffic, ranges, payout control and live statistics.',
         'min_payout' => 5000,
         'signup_enabled' => 1,
         'default_rate' => 0.08,
         'default_payout' => 70,
     ];
+
+    $row = [];
+    try {
+        $stmt = $pdo->query('SELECT * FROM settings WHERE id = 1');
+        $row = $stmt->fetch() ?: [];
+    } catch (Throwable $e) {
+        $row = [];
+    }
+
+    $settings = $defaults;
+    foreach ($row as $key => $value) {
+        if (array_key_exists($key, $settings)) {
+            $settings[$key] = $value;
+        }
+    }
 
     return $settings;
 }
@@ -191,8 +208,23 @@ function render_header(
     $base = defined('BASE_URL') ? rtrim(BASE_URL, '/') : '';
     $bodyClass = trim(($is_admin ? 'admin-body' : 'public-body') . ' ' . $extra_body_class);
 
-    $defaultDescription = 'IPRN SMS Panel for premium rate SMS traffic, ranges, payout control and live statistics. Upload TXT numbers, define ranges and manage payouts for international premium SMS routes.';
-    $description = $meta_description ?: $defaultDescription;
+    $settings = null;
+    if (function_exists('get_settings')) {
+        try {
+            $settings = get_settings();
+        } catch (Throwable $e) {
+            $settings = null;
+        }
+    }
+
+    $brandName = $settings['brand_name'] ?? 'IPRN SMS Panel';
+    $settingsMetaTitle = $settings['meta_title'] ?? null;
+    $settingsMetaDescription = $settings['meta_description'] ?? null;
+
+    $defaultDescription = 'IPRN SMS Panel for premium rate SMS traffic, ranges, payout control and live statistics.';
+    $description = $meta_description ?: ($settingsMetaDescription ?: $defaultDescription);
+
+    $pageTitle = $title !== '' ? $title : ($settingsMetaTitle ?: $brandName);
 
     $url = $base . ($_SERVER['REQUEST_URI'] ?? '');
     ?>
@@ -200,7 +232,7 @@ function render_header(
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title><?php echo e($title); ?></title>
+        <title><?php echo e($pageTitle); ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="<?php echo e($description); ?>">
         <meta name="robots" content="index,follow">
@@ -209,14 +241,14 @@ function render_header(
 
         <link rel="canonical" href="<?php echo e($url); ?>">
 
-        <meta property="og:title" content="<?php echo e($title); ?>">
+        <meta property="og:title" content="<?php echo e($pageTitle); ?>">
         <meta property="og:description" content="<?php echo e($description); ?>">
         <meta property="og:type" content="website">
         <meta property="og:url" content="<?php echo e($url); ?>">
-        <meta property="og:site_name" content="IPRN SMS Panel">
+        <meta property="og:site_name" content="<?php echo e($brandName); ?>">
 
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="<?php echo e($title); ?>">
+        <meta name="twitter:title" content="<?php echo e($pageTitle); ?>">
         <meta name="twitter:description" content="<?php echo e($description); ?>">
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -227,7 +259,7 @@ function render_header(
     <?php if ($is_admin): ?>
         <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="<?php echo $base; ?>/admin/index.php">IPRN SMS Admin</a>
+                <a class="navbar-brand" href="<?php echo $base; ?>/admin/index.php"><?php echo e($brandName); ?> Admin</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#adminNavbar" aria-controls="adminNavbar" aria-expanded="false"
                         aria-label="Toggle navigation">
@@ -267,7 +299,7 @@ function render_header(
     <?php else: ?>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="<?php echo $base; ?>/index.php">IPRN SMS Panel</a>
+                <a class="navbar-brand" href="<?php echo $base; ?>/index.php"><?php echo e($brandName); ?></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#publicNavbar" aria-controls="publicNavbar"
                         aria-expanded="false" aria-label="Toggle navigation">

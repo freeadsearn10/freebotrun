@@ -7,6 +7,7 @@ require_login();
 
 $user = current_user();
 $settings = get_settings();
+$brandName = $settings['brand_name'] ?? 'IPRN SMS Panel';
 
 $minPayout = (float) $settings['min_payout'];
 $balance = (float) $user['balance'];
@@ -30,7 +31,7 @@ $stmtRanges = $pdo->query(
 );
 $ranges = $stmtRanges->fetchAll();
 
-render_header('Dashboard - IPRN SMS Panel');
+render_header('Dashboard - ' . $brandName, false, '', $settings['meta_description'] ?? null);
 ?>
 <div class="row mb-4">
     <div class="col-md-6 mb-3">

@@ -1,5 +1,8 @@
 CREATE TABLE IF NOT EXISTS settings (
   id INT PRIMARY KEY,
+  brand_name VARCHAR(100) DEFAULT 'IPRN SMS Panel',
+  meta_title VARCHAR(150) DEFAULT 'IPRN SMS Panel - Premium rate SMS panel',
+  meta_description VARCHAR(255) DEFAULT 'IPRN SMS Panel for premium rate SMS traffic, ranges, payout control and live statistics.',
   min_payout DECIMAL(10,2) DEFAULT 5000,
   signup_enabled TINYINT(1) DEFAULT 1,
   default_rate DECIMAL(10,4) DEFAULT 0.08,

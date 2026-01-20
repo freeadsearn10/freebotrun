@@ -53,7 +53,10 @@ $topRangesStmt = $pdo->query(
 );
 $topRanges = $topRangesStmt->fetchAll();
 
-render_header('Admin Dashboard - IPRN SMS Panel', true);
+$settings = get_settings();
+$brandName = $settings['brand_name'] ?? 'IPRN SMS Panel';
+
+render_header($brandName . ' - Admin Dashboard', true, '', $settings['meta_description'] ?? null);
 ?>
 <div class="row g-3 mb-4">
     <div class="col-md-3 col-sm-6">

@@ -4,6 +4,7 @@ require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/functions.php';
 
 $settings = get_settings();
+$brandName = $settings['brand_name'] ?? 'IPRN SMS Panel';
 
 if (!$settings['signup_enabled']) {
     flash('error', 'Public signup is currently disabled by the administrator.');
@@ -52,12 +53,12 @@ if ($error) {
     flash('error', $error);
 }
 
-render_header('Register - IPRN SMS Panel', false, 'auth-page');
+render_header('Register - ' . $brandName, false, 'auth-page', $settings['meta_description'] ?? null);
 ?>
 <div class="auth-wrapper">
     <div class="auth-card shadow-sm">
         <div class="auth-card-header">
-            <h1 class="mb-1">IPRN Premium rate SMS</h1>
+            <h1 class="mb-1"><?php echo e($brandName); ?></h1>
             <div class="small fw-semibold mb-3">Monetise your OTP and traffic SMS globally</div>
             <p class="mb-2">
                 Already working with IPRN SMS?

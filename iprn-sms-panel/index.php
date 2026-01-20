@@ -4,6 +4,7 @@ require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/functions.php';
 
 $settings = get_settings();
+$brandName = $settings['brand_name'] ?? 'IPRN SMS Panel';
 
 $totalRanges = (int) $pdo->query('SELECT COUNT(*) FROM ranges')->fetchColumn();
 $totalNumbers = (int) $pdo->query('SELECT COUNT(*) FROM numbers')->fetchColumn();
@@ -11,7 +12,7 @@ $totalUsers = (int) $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'user'"
 $totalSms = (int) $pdo->query('SELECT COALESCE(SUM(sms_count), 0) FROM sms_logs')->fetchColumn();
 $totalRevenue = (float) $pdo->query('SELECT COALESCE(SUM(cost), 0) FROM sms_logs')->fetchColumn();
 
-render_header('IPRN SMS Panel - Home', false, 'landing-page');
+render_header($brandName . ' - Home', false, 'landing-page', $settings['meta_description'] ?? null);
 ?>
 <section class="hero-section py-5">
     <div class="row align-items-center">
@@ -20,12 +21,12 @@ render_header('IPRN SMS Panel - Home', false, 'landing-page');
                 IPRN SMS PLATFORM
             </span>
             <h1 class="display-5 fw-bold mb-3 text-white">
-                High‑Volume IPRN SMS
-                <span class="text-gradient-primary">Routing Panel</span>
+                Turn OTP &amp; Traffic SMS
+                <span class="text-gradient-primary">Into Revenue</span>
             </h1>
             <p class="lead text-light-50 mb-4">
-                Upload numbers as TXT, create ranges and payout rules, and monitor live SMS performance –
-                optimised for shared hosting, cPanel and resellers.
+                Connect premium rate SMS numbers, monitor live volumes and control payouts from one secure panel –
+                built for serious IPRN operators and resellers.
             </p>
             <div class="d-flex flex-wrap gap-2 mb-4">
                 <a href="register.php" class="btn btn-primary btn-lg px-4">Create Account</a>

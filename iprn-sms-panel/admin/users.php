@@ -48,7 +48,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $stmtUsers = $pdo->query('SELECT * FROM users ORDER BY created_at DESC');
 $users = $stmtUsers->fetchAll();
 
-render_header('Users - Admin - IPRN SMS Panel', true);
+$settings = get_settings();
+$brandName = $settings['brand_name'] ?? 'IPRN SMS Panel';
+
+render_header('Users - Admin - ' . $brandName, true, '', $settings['meta_description'] ?? null);
 ?>
 <div class="row mb-4">
     <div class="col-lg-4">

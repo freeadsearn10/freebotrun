@@ -100,7 +100,10 @@ $stmtRanges = $pdo->query(
 );
 $ranges = $stmtRanges->fetchAll();
 
-render_header('Numbers &amp; Ranges - Admin - IPRN SMS Panel', true);
+$settings = get_settings();
+$brandName = $settings['brand_name'] ?? 'IPRN SMS Panel';
+
+render_header('Numbers &amp; Ranges - Admin - ' . $brandName, true, '', $settings['meta_description'] ?? null);
 ?>
 <div class="row mb-4">
     <div class="col-lg-5">

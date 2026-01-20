@@ -7,6 +7,9 @@ if (is_logged_in()) {
     redirect('dashboard.php');
 }
 
+$settings = get_settings();
+$brandName = $settings['brand_name'] ?? 'IPRN SMS Panel';
+
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -47,12 +50,12 @@ if ($error) {
     flash('error', $error);
 }
 
-render_header('Login - IPRN SMS Panel', false, 'auth-page');
+render_header('Login - ' . $brandName, false, 'auth-page', $settings['meta_description'] ?? null);
 ?>
 <div class="auth-wrapper">
     <div class="auth-card shadow-sm">
         <div class="auth-card-header">
-            <h1 class="mb-1">IPRN Premium rate SMS</h1>
+            <h1 class="mb-1"><?php echo e($brandName); ?></h1>
             <div class="small fw-semibold mb-3">Your trusted premium SMS numbers partner</div>
             <p class="mb-2">
                 Don't have an account?

@@ -10,10 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dbUser = trim($_POST['db_user'] ?? '');
     $dbPass = trim($_POST['db_pass'] ?? '');
     $baseUrl = rtrim(trim($_POST['base_url'] ?? ''), '/');
+    $brandName = trim($_POST['brand_name'] ?? 'IPRN SMS Panel');
+    $metaTitle = trim($_POST['meta_title'] ?? ($brandName . ' - Premium rate SMS panel'));
+    $metaDescription = trim($_POST['meta_description'] ?? 'IPRN SMS Panel for premium rate SMS traffic, ranges, payout control and live statistics.');
     $adminEmail = trim($_POST['admin_email'] ?? '');
     $adminPassword = $_POST['admin_password'] ?? '';
 
-    if ($dbName === '' || $dbUser === '' || $baseUrl === '' || $adminEmail === '' || $adminPassword === '') {
+    if ($dbName === '' || $dbUser === '' || $baseUrl === '' || $adminEmail === '' || $adminPassword === '' || $brandName === '') {
         $error = 'All fields are required.';
     } elseif (!filter_var($adminEmail, FILTER_VALIDATE_EMAIL)) {
         $error = 'Admin email must be a valid email address.';
@@ -40,11 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            // Insert default settings
-            $pdo->exec(
-                "INSERT INTO settings (id, min_payout, signup_enabled, default_rate, default_payout)
-                 VALUES (1, 5000, 1, 0.08, 70)"
+            // Insert default settings with brand and SEO meta
+            $stmtSettings = $pdo->prepare(
+                "INSERT INTO settings (id, brand_name, meta_title, meta_description, min_payout, signup_enabled, default_rate, default_payout)
+                 VALUES (1, ?, ?, ?, 5000, 1, 0.08, 70)"
             );
+            $stmtSettings->execute([$brandName, $metaTitle, $metaDescription]);
 
             // Create admin user
             $adminHash = password_hash($adminPassword, PASSWORD_DEFAULT);
@@ -204,6 +208,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="text" class="form-control" id="base_url" name="base_url"
                                    placeholder="https://yourdomain.com/iprn-sms-panel"
                                    value="<?php echo htmlspecialchars($_POST['base_url'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="brand_name">Brand Name</label>
+                            <input type="text" class="form-control" id="brand_name" name="brand_name"
+                                   placeholder="Your Brand Name"
+                                   value="<?php echo htmlspecialchars($_POST['brand_name'] ?? 'IPRN SMS Panel', ENT_QUOTES, 'UTF-8'); ?>" required>
+                            <div class="form-text">Shown in the navbar, page titles and emails.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="meta_title">Default Meta Title</label>
+                            <input type="text" class="form-control" id="meta_title" name="meta_title"
+                                   placeholder="IPRN Premium rate SMS Panel"
+                                   value="<?php echo htmlspecialchars($_POST['meta_title'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="meta_description">Default Meta Description</label>
+                            <textarea class="form-control" id="meta_description" name="meta_description" rows="3"
+                                      placeholder="Short SEO description for search engines and social sharing."><?php
+                                echo htmlspecialchars($_POST['meta_description'] ?? '', ENT_QUOTES, 'UTF-8');
+                            ?></textarea>
                         </div>
 
                         <h5 class="mb-3">Admin Account</h5>

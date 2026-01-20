@@ -6,6 +6,9 @@ require_once __DIR__ . '/../includes/functions.php';
 require_login();
 require_admin();
 
+$settings = get_settings();
+$brandName = $settings['brand_name'] ?? 'IPRN SMS Panel';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     check_csrf_token();
 
@@ -38,7 +41,7 @@ $stmtPayouts = $pdo->query(
 );
 $payouts = $stmtPayouts->fetchAll();
 
-render_header('Billing &amp; Payouts - Admin - IPRN SMS Panel', true);
+render_header('Billing &amp; Payouts - Admin - ' . $brandName, true, '', $settings['meta_description'] ?? null);
 ?>
 <div class="row">
     <div class="col-12">
