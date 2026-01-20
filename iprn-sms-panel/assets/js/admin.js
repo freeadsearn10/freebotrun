@@ -110,7 +110,7 @@
                 }
                 if (typeof data.total_revenue !== 'undefined') {
                     var el3 = document.getElementById('totalRevenue');
-                    if (el3) el3.textContent = '$' + Number(data.total_revenue).toFixed(2);
+                    if (el3) el3.textContent = ' + Number(data.total_revenue).toFixed(2);
                 }
                 if (typeof data.monthly_sms !== 'undefined') {
                     var el4 = document.getElementById('monthlySms');
@@ -120,10 +120,37 @@
         }, 30000);
     }
 
+    function initScrollAnimations() {
+        var animated = document.querySelectorAll('.animate-fade-up');
+        if (!animated.length || !('IntersectionObserver' in window)) {
+            // Fallback: make all visible
+            animated.forEach(function (el) {
+                el.classList.add('is-visible');
+            });
+            return;
+        }
+
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15
+        });
+
+        animated.forEach(function (el) {
+            observer.observe(el);
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         initDailySmsChart();
         initRevenueByCountryChart();
         initTopRangesChart();
         autoRefreshStats();
+        initScrollAnimations();
     });
 })();

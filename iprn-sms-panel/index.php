@@ -15,7 +15,7 @@ render_header('IPRN SMS Panel - Home', false, 'landing-page');
 ?>
 <section class="hero-section py-5">
     <div class="row align-items-center">
-        <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="col-lg-6 mb-4 mb-lg-0 animate-fade-up">
             <span class="badge bg-gradient-primary-soft text-uppercase mb-3 small fw-semibold">
                 IPRN SMS PLATFORM
             </span>
@@ -46,7 +46,7 @@ render_header('IPRN SMS Panel - Home', false, 'landing-page');
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 animate-fade-up">
             <div class="card glass-card shadow-lg mb-3">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>Live Routing Snapshot</span>
@@ -103,12 +103,12 @@ render_header('IPRN SMS Panel - Home', false, 'landing-page');
 </section>
 
 <section class="py-5 bg-dark-900">
-    <h2 class="h4 mb-3 text-white text-center">Built for IPRN Operators &amp; Resellers</h2>
-    <p class="text-center text-light-50 mb-4">
+    <h2 class="h4 mb-3 text-white text-center animate-fade-up">Built for IPRN Operators &amp; Resellers</h2>
+    <p class="text-center text-light-50 mb-4 animate-fade-up">
         Everything you need to manage premium routes, SMS capacity and payout logic – without touching raw code.
     </p>
     <div class="row g-3">
-        <div class="col-md-4">
+        <div class="col-md-4 animate-fade-up">
             <div class="card feature-card h-100 shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title">TXT Number Upload</h5>

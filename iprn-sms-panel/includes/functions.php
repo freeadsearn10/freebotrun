@@ -182,10 +182,19 @@ function render_flash_messages(): void
     }
 }
 
-function render_header(string $title = 'IPRN SMS Panel', bool $is_admin = false, string $extra_body_class = ''): void
-{
+function render_header(
+    string $title = 'IPRN SMS Panel',
+    bool $is_admin = false,
+    string $extra_body_class = '',
+    ?string $meta_description = null
+): void {
     $base = defined('BASE_URL') ? rtrim(BASE_URL, '/') : '';
     $bodyClass = trim(($is_admin ? 'admin-body' : 'public-body') . ' ' . $extra_body_class);
+
+    $defaultDescription = 'IPRN SMS Panel for premium rate SMS traffic, ranges, payout control and live statistics. Upload TXT numbers, define ranges and manage payouts for international premium SMS routes.';
+    $description = $meta_description ?: $defaultDescription;
+
+    $url = $base . ($_SERVER['REQUEST_URI'] ?? '');
     ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -193,6 +202,23 @@ function render_header(string $title = 'IPRN SMS Panel', bool $is_admin = false,
         <meta charset="UTF-8">
         <title><?php echo e($title); ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="<?php echo e($description); ?>">
+        <meta name="robots" content="index,follow">
+        <meta name="keywords" content="IPRN SMS, premium rate SMS, OTP monetization, SMS panel, reseller SMS, international premium rate numbers">
+        <meta name="theme-color" content="#1d4ed8">
+
+        <link rel="canonical" href="<?php echo e($url); ?>">
+
+        <meta property="og:title" content="<?php echo e($title); ?>">
+        <meta property="og:description" content="<?php echo e($description); ?>">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="<?php echo e($url); ?>">
+        <meta property="og:site_name" content="IPRN SMS Panel">
+
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="<?php echo e($title); ?>">
+        <meta name="twitter:description" content="<?php echo e($description); ?>">
+
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="<?php echo $base; ?>/assets/css/admin.css">
