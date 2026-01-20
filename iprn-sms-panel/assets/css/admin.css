@@ -1,0 +1,282 @@
+/* Basic admin & public styling for IPRN SMS Panel */
+
+body {
+    background-color: #05060a;
+    color: #f5f5f5;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.public-body {
+    background: radial-gradient(circle at top left, #1a2333 0, #05060a 55%, #020308 100%);
+    min-height: 100vh;
+}
+
+/* Landing page full-height hero */
+.landing-page .hero-section {
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+}
+
+/* Hero section styling similar to modern SaaS SMS sites */
+.hero-section {
+    position: relative;
+}
+
+.hero-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.15), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(129, 140, 248, 0.15), transparent 55%);
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+.hero-section .row {
+    position: relative;
+    z-index: 1;
+}
+
+/* Helper class – currently no animation to avoid any visibility issues */
+.animate-fade-up {
+    opacity: 1;
+    transform: none;
+}
+
+/* Soft gradients / glass cards */
+.text-gradient-primary {
+    background: linear-gradient(90deg, #38bdf8, #6366f1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.bg-gradient-primary-soft {
+    background: linear-gradient(120deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+    color: #dbeafe;
+    border: 1px solid rgba(59, 130, 246, 0.35);
+}
+
+.bg-dark-900 {
+    background-color: #050814;
+}
+
+.bg-dark-950 {
+    background-color: #02030a;
+}
+
+.bg-dark-975 {
+    background-color: #020208;
+}
+
+.text-light-50 {
+    color: rgba(241, 245, 249, 0.7);
+}
+
+.glass-card {
+    background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.95));
+    border-radius: 0.75rem;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    box-shadow: 0 24px 80px rgba(15, 23, 42, 0.8);
+}
+
+.feature-card {
+    background: linear-gradient(145deg, #020617, #020617);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+/* Buttons */
+.btn-outline-light {
+    border-color: rgba(148, 163, 184, 0.6);
+    color: #e5e7eb;
+}
+
+.btn-outline-light:hover {
+    background-color: #e5e7eb;
+    color: #020617;
+}
+
+.hero-meta > div {
+    min-width: 120px;
+}
+
+/* Auth pages: gradient background with centered card */
+.auth-page.public-body {
+    background: radial-gradient(circle at top left, #4f46e5 0, #1f2937 40%, #0b1120 100%);
+}
+
+.auth-wrapper {
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 720px;
+    background: #ffffff;
+    border-radius: 1.5rem;
+    box-shadow: 0 18px 60px rgba(15, 23, 42, 0.25);
+    overflow: hidden;
+    border: none;
+}
+
+.auth-card-header {
+    padding: 2rem 2rem 1.5rem;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #f9fafb;
+}
+
+.auth-card-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.auth-card-header .small {
+    color: #e0f2fe;
+}
+
+.auth-card-header a {
+    color: #e0f2fe;
+    text-decoration: underline;
+}
+
+.auth-card-body {
+    padding: 2rem;
+    background: #ffffff;
+    color: #111827;
+}
+
+.auth-form-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.auth-muted {
+    color: #6b7280;
+}
+
+/* Login input styling similar to reference panel */
+.auth-input-wrapper {
+    display: flex;
+    align-items: center;
+    background: #f3f4f6;
+    border-radius: 999px;
+    padding: 0.65rem 1rem;
+    border: 1px solid transparent;
+}
+
+.auth-input-wrapper:focus-within {
+    border-color: #22c55e;
+    background: #ffffff;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.15);
+}
+
+.auth-input-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    color: #9ca3af;
+    font-size: 1.1rem;
+}
+
+.auth-input {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    outline: none;
+    flex: 1;
+    padding-left: 0;
+}
+
+.auth-input::placeholder {
+    color: #9ca3af;
+}
+
+.auth-input:focus {
+    border: none;
+    box-shadow: none;
+    outline: none;
+}
+
+/* Green pill button like reference */
+.auth-btn-primary {
+    border-radius: 999px;
+    background: #22c55e;
+    border-color: #16a34a;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.auth-btn-primary:hover {
+    background: #16a34a;
+    border-color: #15803d;
+}
+
+/* Admin area */
+.admin-body {
+    padding-top: 56px;
+    min-height: 100vh;
+    background: #f5f5f5;
+    color: #212529;
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.card {
+    border-radius: 0.75rem;
+}
+
+.admin-container {
+    margin-top: 56px;
+}
+
+.sidebar {
+    min-height: calc(100vh - 56px);
+    border-right: 1px solid #dee2e6;
+}
+
+.sidebar .list-group-item {
+    border: none;
+    border-radius: 0;
+}
+
+.sidebar .list-group-item.active,
+.sidebar .list-group-item:hover {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+/* Responsive admin sidebar */
+@media (max-width: 767.98px) {
+    .sidebar {
+        display: none;
+    }
+
+    .admin-body {
+        padding-top: 56px;
+    }
+}
+
+/* Tables on mobile */
+@media (max-width: 575.98px) {
+    .table-responsive {
+        font-size: 0.85rem;
+    }
+
+    .card-body {
+        padding: 0.75rem;
+    }
+}
+
+/* Flash alerts spacing */
+.alert {
+    margin-top: 1rem;
+}
